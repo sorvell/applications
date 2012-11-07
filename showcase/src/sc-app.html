@@ -1,0 +1,41 @@
+<element name="sc-app" extends="g-page">
+<link rel="stylesheet" href="sc-app.css">
+<link rel="components" href="../../../toolkit/src/g-page.html">
+<link rel="components" href="../../youtube/src/yt-app.html">
+<link rel="components" href="../../../toolkit/src/g-panels.html">
+<link rel="components" href="../../../toolkit/src/g-menu.html">
+<link rel="components" href="../../../toolkit/src/g-menuitem.html">
+<template>
+  <g-panels id="panels" transition="flow">
+    <section id="basementPanel">
+      <div class="logo"></div>
+      <g-menu class="menu">
+        <g-menuitem id="test" src="images/youtube-32.png" on-click="gotoYoutube">YouTube</g-menuitem>
+      </g-menu>
+    </section>
+    <section id="mainPanel">
+      <div class="gutter" on-click="toggle"></div>
+      <g-panels id="contentPanels" on-click="gotoMain">
+        <section></section>
+        <yt-app id="youtube"></yt-app>
+      </g-panels>
+    </section>
+  </g-panels>
+</template>
+<script>
+  this.component({
+    prototype: {
+      gotoMain: function() {
+        this.$.panels.selected = 'mainPanel';
+      },
+      toggle: function() {
+        this.$.panels.toggleBetween('basementPanel', 'mainPanel');
+      },
+      gotoYoutube: function() {
+        this.$.contentPanels.selected = 'youtube';
+        this.gotoMain();
+      }
+    }
+  });
+</script>
+</element>

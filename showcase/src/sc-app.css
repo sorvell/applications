@@ -1,0 +1,71 @@
+@host {
+  font-family: 'Helvetica Nue', 'Helvetica', Arial, 'open sans' sans-serif;
+  height: 100%;
+  display: -webkit-flex;
+}
+
+g-panels {
+  -webkit-flex: 1;
+  min-height: 0;
+  -webkit-user-select: none;
+}
+
+section {
+  box-sizing: border-box;
+  -webkit-transition: -webkit-transform .3s;
+  display: -webkit-flex;
+  background: whitesmoke;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+#basementPanel {
+  width: 200px;
+  color: #EBEBEB;
+  display: -webkit-flex;
+  -webkit-flex-flow: column;
+  background: #333;
+}
+
+#mainPanel {
+  width: 100%;
+  display: -webkit-flex;
+  background: whitesmoke;
+}
+
+.gutter {
+  width: 10px;
+  background: #333;
+}
+
+#contentPanels {
+  -webkit-flex: 1;
+  min-width: 0;
+  border-left: 1px solid #ccc;
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#youtube {
+  display: -webkit-flex;
+}
+
+yt-app {
+  -webkit-flex: 1;
+}
+
+.logo {
+  font-size: 21px;
+  height: 60px;
+  border-bottom: 1px solid #444;
+  background: url(images/google-white.png) 17px 17px no-repeat;
+}
+
+.menu {
+  -webkit-flex: 1;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+}
+
