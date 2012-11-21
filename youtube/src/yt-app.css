@@ -46,6 +46,12 @@ section {
 
 g-ajax {
   -webkit-flex: 1;
+  display: block;
+  /*
+  TODO(sorvell): styling changes due to tabIndex=-1 on panels
+  must isolate. Use max-height to avoid scrolling being compeltely broken.
+  */
+  max-height: 100%;
   min-height: 0;
   overflow: auto;
 }

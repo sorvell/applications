@@ -6,19 +6,16 @@
 <link rel="components" href="../../../toolkit/src/g-icon-button.html">
 <link rel="components" href="../../../toolkit/src/g-ajax.html">
 <template>
-  <g-panels youtube id="panels" transition="flow" index="0">
+  <g-panels id="panels" transition="flow">
     <section id="listPanel">
-      <!-- TODO(sorvell): addBinding doesn't cut it for 2-way -->
-      <template instantiate>
-        <div class="toolbar">
-          <input value="{{query}}" on-input="searchInputHandler" autofocus></input>
-          <div on-click="searchInputClear" class="input-clear"></div>
-        </div>
-      </template>
+      <div class="toolbar">
+        <input id="input" value="{{query}}" on-input="searchInputHandler" Xautofocus></input>
+        <div on-click="searchInputClear" class="input-clear"></div>
+      </div>
       <g-ajax id="ajax" url="http://gdata.youtube.com/feeds/api/videos/" 
-              handleAs="json" params='{"alt":"json", "q":"{{query}}", "v": "2", 
+              auto handleAs="json" params='{"alt":"json", "q":"{{query}}", "v": "2", 
               "max-results":"{{maxResults}}", "start-index":"{{startIndex}}"}'
-              on-click="itemClick">
+              on-click="itemClick" on-response="ajaxResponse">
         <template iterate="response.feed.entry">
           <div class="item {{selected}}">{{title.$t}}</div>
         </template>
@@ -30,46 +27,44 @@
         <div class="toolbar-title">{{title.$t}}</div>
         <g-icon-button src="images/nav-grid.svg" on-click="moreToggle"></g-icon-button>
       </div>
-      <yt-video videoid="{{media$group.yt$videoid.$t}}"></yt-video>
+      <yt-video id="video" videoid="{{media$group.yt$videoid.$t}}"></yt-video>
     </section>
-    <section id="morePanel" class="right" on-click="moreButtonClick">
+    <section id="morePanel" class="right" on-click="moreToggle">
       More Stuff!
     </section>
   </g-panels>
 </template>
 <script>
   
-  var model = {
+  this.component({
     query: 'chrome commercial',
     maxResults: 50,
     startIndex: 1,
-    video: {}
-  };
-  
-  this.component({
-    shadowRootCreated: function() {
-      this.model = model;
-      this.$.videoPanel.model = model.video;
+    video: null,
+    ready: function() {
+      this.$super();
+      this.$.videoPanel.model = this.video;
     },
-    created: function() {
-      this.$.ajax.auto = true;
+    listToggle: function() {
+      this.$.panels.toggleBetween('listPanel', 'videoPanel');
     },
-    prototype: {
-      listToggle: function() {
-        this.$.panels.toggleBetween('listPanel', 'videoPanel');
-      },
-      moreToggle: function() {
-        this.$.panels.toggleBetween('morePanel', 'videoPanel');
-      },
-      itemClick: function(e) {
-        this.$.videoPanel.model = e.target.model;
-        this.$.panels.selected = 'videoPanel';
-      },
-      searchInputClear: function() {
-        var input = this.shadow.querySelector('input');
-        input.value = '';
-        input.focus();
-      }
+    moreToggle: function() {
+      this.$.panels.toggleBetween('morePanel', 'videoPanel');
+    },
+    itemClick: function(e) {
+      this.$.videoPanel.model = e.target.model;
+      this.$.panels.selected = 'videoPanel';
+    },
+    searchInputClear: function() {
+      this.$.input.value = '';
+      this.$.input.focus();
+    },
+    ajaxResponse: function(inEvent) {
+      this.response = inEvent.detail.response;
+    },
+    // TODO(sorvell): this is here since we're using a 1-way binding on input.value
+    searchInputHandler: function() {
+      this.query = this.$.input.value;
     }
   });
 </script>
