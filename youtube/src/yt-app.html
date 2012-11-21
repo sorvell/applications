@@ -9,7 +9,7 @@
   <g-panels id="panels" transition="flow">
     <section id="listPanel">
       <div class="toolbar">
-        <input id="input" value="{{query}}" on-input="searchInputHandler" Xautofocus></input>
+        <input id="input" value="{{query}}" on-input="searchInputHandler" autofocus></input>
         <div on-click="searchInputClear" class="input-clear"></div>
       </div>
       <g-ajax id="ajax" url="http://gdata.youtube.com/feeds/api/videos/" 
